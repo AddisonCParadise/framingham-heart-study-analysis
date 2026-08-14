@@ -21,3 +21,24 @@ Our main research question: what factors are associated with an individual's tot
 ## Author
 
 Addison Paradise. This analysis was completed as part of a team project for a graduate statistics course; this repository reflects my individual submission of our team's shared work.
+
+## Decision Log
+
+### Assignment 2: Dataset (2026-07-19)
+- Dataset: **Framingham Heart Study dataset** from Kaggle with data requirements pulled from the National Heart, Lung and Blood Institute/BioLINCC. It contains 4,240 observations covering variables like age, cigarettes per day, total cholesterol, BMI, heart rate, glucose (continuous) and male, current smoker, diabetes, and 10-year CHD (categorical).
+- Main variable of interest: **Total cholesterol** because we wanted to predict an individuals cholesterol level using variables like age, glucose, and smoking status. The team was motivated by the prevalence of heart disease in America and wanted to explore whether/how cholesterol relates to heart disease risk while also learning a new health-related domain through familiar statistical methods.
+- Key decision: Chose to predict total cholesterol as the response variable by using demographic and lifestyle predictors. This was a choice driven by wanting to understand the upstream factors that shape cholesterol levels, which in turn plays into heart disease risk.
+
+### Assignment 3: Descriptive Stats (2026-07-26)
+- Cleaning done: 487 missing values were found all within the continuous variables (cholesterol, age, cigarettes per day, BMI, heart rate, glucose, and blood pressure). These were converted from "NA" text to blank cells to make the descriptive statistics and visuals compute correctly rather than dropping or imputing the rows.
+- Most surprising pattern: Out of the four categorical variables, two were heavily skewed to the right rather than nearly evenly split - diabetes (97.4% no diabetes vs. 2.6% yes) and prevalent hypertension (69% no vs. 31% yes) while gender and current smoker status stayed fairly even. On the continuous side, most variables skewed right with high-value outliers, except age, where the 30-34 group stood out as an outlier being a potential artifact of the datasets minimum age being 32 rather than a true pattern.
+
+### Assignment 4: Probability (2026-07-26)
+- Normal vs. empirical, and why: Heart rate was treated as normally distributed because it passed two checks: its histogram was fairly symmetric and bell-shaped and when the team calculated the normal distributions predicted 10th/90th percentile cutoffs, only 20.55% of the actual data fell outside them almost matching the 20% a true normal distribution would predict. The other variables required the empirical approach since they were too skewed to trust a normal model.
+
+### Assignment 5: Inference (2026-08-09)
+- What we tested, alpha, conclusion: The team ran two hypothesis tests and one confidence interval all at α = 0.05. We rejected that the mean total cholesterol was less than or equal to 225 mg/dL and that the mean heart rate = 80 bpm. After building a 95% confidence interval for glucose, it was estimated that the true population mean glucose level will fall between 81.21 and 82.72 mg/dL. The cholesterol test confirms that the population mean falls in the upper "borderline high" range landing at 236.70 mg/dL when the threshold was between 200-239 mg/dL. This is a level worth flagging since it does sit close enough to the 240 mg/dL "high" cutoff that even modest upward drift in the population could push the average into that riskier category.
+
+### Assignment 6: Regression (2026-08-12)
+- First predictor removed and why: The team used backward elimination strating with all 13 predictors and removing the least significant one at the time. In the first model, prevalent hypertension had the highest p-value among all predictors at 0.887 (far above the alpha threshold of 0.05), so it was removed first.
+- Multicollinearity handling: After landing on the final model (gender, education, age, cigarettes per day, diastolic blood pressure, BMI, and heart rate as significant predictors), the team built a correlation matrix among these remaining predictors. All pairwise correlations were weak so no strong multicollinearity was found. As a result, no predictors needed to be dropped or combined, the model was left as-is.
